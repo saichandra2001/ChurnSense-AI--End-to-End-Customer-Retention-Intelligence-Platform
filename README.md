@@ -1,5 +1,4 @@
-#  ChurnSense-AI
-### End-to-End Customer Retention Intelligence Platform using Machine Learning, FastAPI, Docker & AWS EC2
+#  ChurnSense-AI End-to-End Customer Retention Intelligence Platform using Machine Learning, FastAPI, Docker & AWS EC2
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-REST_API-green)
