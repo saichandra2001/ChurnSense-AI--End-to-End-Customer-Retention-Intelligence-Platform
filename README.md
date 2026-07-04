@@ -1,60 +1,100 @@
-# ChurnSense-AI-End-to-End-Customer-Retention-Intelligence-Platform with FastAPI, Docker & AWS EC2
+#  ChurnSense-AI
+### End-to-End Customer Retention Intelligence Platform using Machine Learning, FastAPI, Docker & AWS EC2
 
-## Project Overview
-
-This project predicts whether a bank customer is likely to churn based on customer information using a Machine Learning model. The model is deployed as a REST API using FastAPI, containerized with Docker, and hosted on an AWS EC2 Ubuntu server.
-
-The objective of this project is to demonstrate an end-to-end Machine Learning deployment pipeline, starting from model training to cloud deployment.
-
----
-
-# Project Architecture
-
-```
-Customer Data
-      │
-      ▼
-Machine Learning Model (XGBoost)
-      │
-      ▼
-FastAPI REST API
-      │
-      ▼
-Docker Container
-      │
-      ▼
-AWS EC2 (Ubuntu)
-      │
-      ▼
-Public API (Swagger UI)
-```
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-REST_API-green)
+![XGBoost](https://img.shields.io/badge/Model-XGBoost-orange)
+![Docker](https://img.shields.io/badge/Docker-Container-blue)
+![AWS](https://img.shields.io/badge/AWS-EC2-yellow)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
 
-# Technologies Used
+##  Project Overview
 
-* Python 3.11
-* FastAPI
-* Uvicorn
-* Scikit-learn
-* XGBoost
-* Pandas
-* NumPy
-* Docker
-* AWS EC2
-* Ubuntu Linux
-* Pickle
+**ChurnSense-AI** is an end-to-end Machine Learning application that predicts whether a bank customer is likely to churn based on demographic and financial information.
+
+Unlike traditional prediction systems that only return a classification result, this project integrates a **Large Language Model (LLM)** through the **Hugging Face Inference API** to generate natural language business explanations for every prediction.
+
+The entire solution is built as a production-ready REST API using **FastAPI**, containerized with **Docker**, and deployed on an **AWS EC2 (Ubuntu)** server.
+
+This project demonstrates the complete Machine Learning deployment lifecycle—from data preprocessing and model training to API development, containerization, and cloud deployment.
 
 ---
 
-# Project Structure
+#  Features
+
+- Customer Churn Prediction
+- XGBoost Machine Learning Model
+- AI-generated Business Explanations using LLM
+- FastAPI REST API
+- Interactive Swagger Documentation
+- Docker Containerization
+- AWS EC2 Deployment
+- Production-ready API Architecture
+
+---
+
+#  Project Architecture
 
 ```
+                    User
+                      │
+                      ▼
+                FastAPI REST API
+                      │
+         ┌────────────┴────────────┐
+         ▼                         ▼
+  XGBoost Model          Hugging Face LLM
+         │                         │
+         ▼                         ▼
+ Customer Churn          Business Explanation
+         │                         │
+         └────────────┬────────────┘
+                      ▼
+                JSON Response
+```
+
+---
+
+#  Tech Stack
+
+## Machine Learning
+
+- Python
+- Scikit-learn
+- XGBoost
+- Pandas
+- NumPy
+
+## Backend
+
+- FastAPI
+- Uvicorn
+- Pydantic
+
+## AI / LLM
+
+- Hugging Face Inference API
+- Meta Llama 3.3-70B-Instruct
+
+## Deployment
+
+- Docker
+- AWS EC2
+- Ubuntu Linux
+
+---
+
+#  Project Structure
+
+```text
 customer-churn/
 │
 ├── app.py
+├── llm.py
 ├── Dockerfile
-├── requirement.txt
+├── requirements.txt
 ├── churn_model.pkl
 ├── scaler.pkl
 ├── gender_encoder.pkl
@@ -65,90 +105,141 @@ customer-churn/
 
 ---
 
-# Machine Learning Workflow
+#  Machine Learning Workflow
 
-### Data Collection
+## 1️ Data Collection
 
-* Bank Customer Churn dataset
-
-### Data Preprocessing
-
-* Missing value checking
-* Feature selection
-* Label Encoding
-* Feature Scaling
-
-### Model Training
-
-Algorithm Used:
-
-* XGBoost Classifier
-
-### Model Serialization
-
-Saved files:
-
-* churn_model.pkl
-* scaler.pkl
-* gender_encoder.pkl
+- Bank Customer Churn Dataset
 
 ---
 
-# FastAPI Development
+## 2️ Data Preprocessing
 
-Created REST API using FastAPI.
+- Missing Value Analysis
+- Feature Selection
+- Label Encoding
+- Feature Scaling
 
-### Available Endpoints
+---
+
+## 3️ Exploratory Data Analysis (EDA)
+
+- Customer Distribution
+- Correlation Analysis
+- Feature Visualization
+
+---
+
+## 4️ Feature Engineering
+
+- Data Transformation
+- Encoding
+- Scaling
+
+---
+
+## 5️ Model Training
+
+Models Used
+
+- Random Forest (Baseline)
+- XGBoost Classifier (Final Model)
+
+---
+
+## 6️ Model Evaluation
+
+- Accuracy
+- Confusion Matrix
+- Classification Report
+
+---
+
+## 7️ Hyperparameter Tuning
+
+Improved model performance using parameter optimization.
+
+---
+
+## 8️ Model Serialization
+
+Saved artifacts:
 
 ```
-GET /
-```
-
-Returns API status.
-
-```
-POST /predict
-```
-
-Accepts customer details and predicts customer churn.
-
-Swagger Documentation:
-
-```
-/docs
+churn_model.pkl
+scaler.pkl
+gender_encoder.pkl
 ```
 
 ---
 
-# Dockerization
+#  FastAPI Development
 
-Created Dockerfile to containerize the application.
+The application exposes REST APIs for customer churn prediction.
 
-Docker Workflow
+## Endpoints
+
+### GET /
+
+Returns API health status.
+
+---
+
+### POST /predict
+
+Predicts customer churn and returns an AI-generated business explanation.
+
+---
+
+### Swagger Documentation
+
+```
+http://localhost:8000/docs
+```
+
+---
+
+#  Sample API Response
+
+```json
+{
+  "prediction": 1,
+  "prediction_text": "Customer is likely to churn",
+  "AI_explanation": "This customer may churn due to a relatively low credit score, inactive membership, and limited engagement with banking services."
+}
+```
+
+---
+
+#  Dockerization
+
+The application is containerized using Docker for consistent deployment across environments.
+
+## Docker Workflow
 
 ```
 Application
-     │
+      │
 Dockerfile
-     │
+      │
 Docker Image
-     │
+      │
 Docker Container
 ```
 
-Docker Build
+## Build Docker Image
 
 ```bash
 docker build -t customer-churn-app .
 ```
 
-Docker Run
+## Run Container
 
 ```bash
 docker run -d -p 8000:8000 --name customer-churn-container customer-churn-app
 ```
 
-Verify Running Container
+## Verify Running Container
 
 ```bash
 docker ps
@@ -156,19 +247,19 @@ docker ps
 
 ---
 
-# AWS EC2 Deployment
+#  AWS EC2 Deployment
 
-Created an Ubuntu EC2 instance on AWS.
+The application is deployed on an Ubuntu EC2 instance.
 
-Deployment Steps
+## Step 1
 
-### 1. Launch EC2 Instance
+Launch an Ubuntu EC2 Instance.
 
-* Ubuntu Server
-* Security Group configured
-* SSH Key Pair created
+---
 
-### 2. Connect to EC2
+## Step 2
+
+Connect using SSH.
 
 ```bash
 ssh -i customer-key.pem ubuntu@<EC2-PUBLIC-IP>
@@ -176,7 +267,9 @@ ssh -i customer-key.pem ubuntu@<EC2-PUBLIC-IP>
 
 ---
 
-### 3. Update Ubuntu
+## Step 3
+
+Update Ubuntu.
 
 ```bash
 sudo apt update
@@ -185,7 +278,9 @@ sudo apt upgrade -y
 
 ---
 
-### 4. Install Docker
+## Step 4
+
+Install Docker.
 
 ```bash
 sudo apt install docker.io -y
@@ -199,9 +294,9 @@ sudo systemctl status docker
 
 ---
 
-### 5. Upload Project
+## Step 5
 
-Copied the complete project from the local machine to EC2 using SCP.
+Upload Project.
 
 ```bash
 scp -i customer-key.pem -r . ubuntu@<EC2-PUBLIC-IP>:~/customer-churn
@@ -209,7 +304,9 @@ scp -i customer-key.pem -r . ubuntu@<EC2-PUBLIC-IP>:~/customer-churn
 
 ---
 
-### 6. Build Docker Image
+## Step 6
+
+Build Docker Image.
 
 ```bash
 cd ~/customer-churn
@@ -219,7 +316,9 @@ sudo docker build -t customer-churn-app .
 
 ---
 
-### 7. Run Docker Container
+## Step 7
+
+Run Docker Container.
 
 ```bash
 sudo docker run -d \
@@ -230,7 +329,9 @@ customer-churn-app
 
 ---
 
-### 8. Verify Container
+## Step 8
+
+Verify Container.
 
 ```bash
 sudo docker ps
@@ -238,15 +339,17 @@ sudo docker ps
 
 ---
 
-### 9. Configure AWS Security Group
+## Step 9
 
-Opened Custom TCP Port:
+Configure Security Group
+
+Open Port
 
 ```
 8000
 ```
 
-Source:
+Source
 
 ```
 0.0.0.0/0
@@ -254,102 +357,108 @@ Source:
 
 ---
 
-### 10. Access Swagger UI
+## Step 10
+
+Open Swagger UI
 
 ```
 http://<EC2-PUBLIC-IP>:8000/docs
 ```
 
-The API is now publicly accessible through AWS EC2.
+---
+
+#  Challenges Faced
+
+During deployment, several real-world issues were encountered and successfully resolved.
+
+- UTF-16 to UTF-8 requirements file conversion
+- Docker build failures
+- Missing Python packages
+- EC2 disk storage limitations
+- Root partition expansion
+- Docker installation issues
+- AWS Security Group configuration
+- SSH authentication
+- Docker networking
+
+These challenges provided valuable hands-on experience in Linux administration and cloud deployment.
 
 ---
 
-# Challenges Faced
+#  Skills Demonstrated
 
-During deployment, several real-world issues were encountered and resolved.
+### Machine Learning
 
-* Requirement file encoding issue (UTF-16 to UTF-8)
-* Docker image build failures
-* Missing Python dependencies
-* EC2 storage limitations
-* Root partition size issues
-* Docker installation and configuration
-* AWS Security Group configuration
-* SSH authentication
-* Docker container networking
+- Data Preprocessing
+- Feature Engineering
+- XGBoost Classification
+- Model Serialization
 
-Resolving these issues provided valuable hands-on experience with cloud deployment and Linux system administration.
+### Backend
 
----
+- FastAPI
+- REST API Development
+- Swagger Documentation
 
-# Skills Demonstrated
+### AI Integration
 
-Machine Learning
+- Hugging Face API
+- Meta Llama 3.3
+- Prompt Engineering
 
-* Data preprocessing
-* Feature engineering
-* XGBoost Classification
-* Model serialization
+### Cloud Computing
 
-Backend Development
+- AWS EC2
+- Ubuntu
+- SSH
+- Security Groups
 
-* FastAPI
-* REST API Development
-* Swagger Documentation
+### Containerization
 
-Containerization
+- Docker
+- Docker Images
+- Docker Containers
 
-* Docker
-* Docker Image Creation
-* Docker Container Management
+### Linux
 
-Cloud Computing
-
-* AWS EC2
-* Ubuntu Server
-* SSH
-* Security Groups
-
-Linux
-
-* Package Management
-* Docker Installation
-* File Transfer using SCP
-* Server Administration
+- Package Management
+- SCP
+- Server Administration
 
 ---
 
-# Future Improvements
+#  Future Improvements
 
-* GitHub Actions CI/CD
-* Nginx Reverse Proxy
-* HTTPS using Let's Encrypt
-* Custom Domain
-* Hugging Face LLM Integration
-* AI-powered Customer Churn Explanation
-* Monitoring and Logging
-* Automatic Docker Restart Policy
-* Production Deployment Pipeline
-
----
-
-# Author
-
-Sai Chandra Prasad P
-
-AI Engineer | Machine Learning Engineer | Data Scientist
+- GitHub Actions CI/CD
+- Nginx Reverse Proxy
+- HTTPS with Let's Encrypt
+- Custom Domain
+- Monitoring & Logging
+- Automatic Docker Restart
+- Production Deployment Pipeline
+- Kubernetes Deployment
+- Model Versioning
+- Database Integration
 
 ---
 
-# Project Status
+#  Author
 
--> Machine Learning Model Completed
+**Sai Chandra Prasad P**
 
--> FastAPI REST API Completed
+AI Engineer • Machine Learning Engineer • Data Scientist
 
--> Swagger Documentation Completed
+---
 
--> Docker Containerization Completed
+# ✅ Project Status
 
--> AWS EC2 Deployment Completed
+- ✅ Machine Learning Model Completed
+- ✅ FastAPI REST API Completed
+- ✅ Swagger Documentation Completed
+- ✅ Docker Containerization Completed
+- ✅ AWS EC2 Deployment Completed
+- ✅ Hugging Face LLM Integration Completed
 
+---
+
+## ⭐ If you found this project helpful, consider giving it a Star!
