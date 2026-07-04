@@ -11,13 +11,7 @@
 
 ##  Project Overview
 
-**ChurnSense-AI** is an end-to-end Machine Learning application that predicts whether a bank customer is likely to churn based on demographic and financial information.
-
-Unlike traditional prediction systems that only return a classification result, this project integrates a **Large Language Model (LLM)** through the **Hugging Face Inference API** to generate natural language business explanations for every prediction.
-
-The entire solution is built as a production-ready REST API using **FastAPI**, containerized with **Docker**, and deployed on an **AWS EC2 (Ubuntu)** server.
-
-This project demonstrates the complete Machine Learning deployment lifecycle—from data preprocessing and model training to API development, containerization, and cloud deployment.
+This project is an end-to-end Machine Learning application designed to predict whether a bank customer is likely to churn based on their demographic and financial profile. Instead of just outputting raw classification data, the system integrates a Large Language Model (LLM) via the Hugging Face Inference API to generate automated, natural language business explanations for each prediction. This bridges the gap between technical data output and actionable business insights for stakeholders. The entire application is built as a production-ready REST API using FastAPI, containerized with Docker for environment consistency, and deployed on an AWS EC2 (Ubuntu) cloud server. The objective of this project is to demonstrate an end-to-end Machine Learning deployment pipeline, starting from model training to cloud deployment.
 
 ---
 
